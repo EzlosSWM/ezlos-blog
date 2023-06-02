@@ -1,4 +1,4 @@
-[submodule "https://github.com/dillonzq/LoveIt.git"] 
+[submodule "LoveIt"] 
   path = themes/LoveIt
   url = http://github.com/dillonzq/LoveIt.git/
 
