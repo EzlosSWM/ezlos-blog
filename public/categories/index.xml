@@ -1,23 +1,16 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Categories on Ezlos | Study With Me</title>
-    <link>http://example.org/categories/</link>
-    <description>Recent content in Categories on Ezlos | Study With Me</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <managingEditor>ezlosswm@gmail.com (Carlos Gomez)</managingEditor>
-    <webMaster>ezlosswm@gmail.com (Carlos Gomez)</webMaster>
-    <copyright>Carlos Gomez</copyright>
-    <lastBuildDate>Thu, 01 Jun 2023 15:58:26 +0800</lastBuildDate><atom:link href="http://example.org/categories/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Design Patterns</title>
-      <link>http://example.org/categories/design-patterns/</link>
-      <pubDate>Thu, 01 Jun 2023 15:58:26 +0800</pubDate>
-      <author>ezlosswm@gmail.com (Carlos Gomez)</author>
-      <guid>http://example.org/categories/design-patterns/</guid>
-      <description></description>
-    </item>
-    
-  </channel>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Categories - Category - Ezlos | Study With Me</title>
+        <link>http://example.org/categories/</link>
+        <description>Categories - Category - Ezlos | Study With Me</description>
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>ezlosswm@gmail.com (Carlos Gomez)</managingEditor>
+            <webMaster>ezlosswm@gmail.com (Carlos Gomez)</webMaster><copyright>Carlos Gomez</copyright><lastBuildDate>Thu, 01 Jun 2023 15:58:26 &#43;0800</lastBuildDate><atom:link href="http://example.org/categories/" rel="self" type="application/rss+xml" /><item>
+    <title>Design Patterns</title>
+    <link>http://example.org/categories/design-patterns/</link>
+    <pubDate>Thu, 01 Jun 2023 15:58:26 &#43;0800</pubDate>
+    <author>Carlos Gomez</author>
+    <guid>http://example.org/categories/design-patterns/</guid>
+    <description><![CDATA[]]></description>
+</item>
+</channel>
 </rss>

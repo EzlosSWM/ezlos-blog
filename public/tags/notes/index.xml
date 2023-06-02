@@ -1,23 +1,16 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>notes on Ezlos | Study With Me</title>
-    <link>http://example.org/tags/notes/</link>
-    <description>Recent content in notes on Ezlos | Study With Me</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <managingEditor>ezlosswm@gmail.com (Carlos Gomez)</managingEditor>
-    <webMaster>ezlosswm@gmail.com (Carlos Gomez)</webMaster>
-    <copyright>Carlos Gomez</copyright>
-    <lastBuildDate>Thu, 01 Jun 2023 15:58:26 +0800</lastBuildDate><atom:link href="http://example.org/tags/notes/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Builder Design Pattern in Go</title>
-      <link>http://example.org/posts/builder-pattern/</link>
-      <pubDate>Thu, 01 Jun 2023 15:58:26 +0800</pubDate>
-      <author>ezlosswm@gmail.com (Carlos Gomez)</author>
-      <guid>http://example.org/posts/builder-pattern/</guid>
-      <description>A short explanation of the builder design pattern with an example using Go.</description>
-    </item>
-    
-  </channel>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>notes - Tag - Ezlos | Study With Me</title>
+        <link>http://example.org/tags/notes/</link>
+        <description>notes - Tag - Ezlos | Study With Me</description>
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>ezlosswm@gmail.com (Carlos Gomez)</managingEditor>
+            <webMaster>ezlosswm@gmail.com (Carlos Gomez)</webMaster><copyright>Carlos Gomez</copyright><lastBuildDate>Thu, 01 Jun 2023 15:58:26 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/notes/" rel="self" type="application/rss+xml" /><item>
+    <title>Builder Design Pattern in Go</title>
+    <link>http://example.org/posts/builder-pattern/</link>
+    <pubDate>Thu, 01 Jun 2023 15:58:26 &#43;0800</pubDate>
+    <author>Carlos Gomez</author>
+    <guid>http://example.org/posts/builder-pattern/</guid>
+    <description><![CDATA[A short explanation of the builder design pattern with an example using Go.]]></description>
+</item>
+</channel>
 </rss>
