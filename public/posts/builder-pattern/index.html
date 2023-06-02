@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Builder Design Pattern in Go - Ezlos | Study With Me</title><meta name="Description" content="Notes for the builder design pattern implemented in Go."><meta property="og:title" content="Builder Design Pattern in Go" />
+<meta property="og:description" content="Notes for the builder design pattern implemented in Go." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/posts/builder-pattern/" /><meta property="og:image" content="http://example.org/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-06-01T15:58:26+08:00" />
+<meta property="article:modified_time" content="2023-05-20T15:58:26+08:00" /><meta property="og:site_name" content="Ezlos | Study With Me" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://example.org/logo.png"/>
+
+<meta name="twitter:title" content="Builder Design Pattern in Go"/>
+<meta name="twitter:description" content="Notes for the builder design pattern implemented in Go."/>
+<meta name="application-name" content="Ezlos SWM">
+<meta name="apple-mobile-web-app-title" content="Ezlos SWM"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://example.org/posts/builder-pattern/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Builder Design Pattern in Go",
+        "inLanguage": "en-us",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/example.org\/posts\/builder-pattern\/"
+        },"genre": "posts","keywords": "design, pattern, go, notes","wordcount":  703 ,
+        "url": "http:\/\/example.org\/posts\/builder-pattern\/","datePublished": "2023-06-01T15:58:26+08:00","dateModified": "2023-05-20T15:58:26+08:00","license": "Carlos Gomez","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Carlos Gomez"
+            },"description": "Notes for the builder design pattern implemented in Go."
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Ezlos | Study With Me"><span class="header-title-pre">Ezlos</span><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/" title="Posts"> Posts </a><a class="menu-item" href="/tags/" title="Tags"> Tags </a><a class="menu-item" href="/categories/" title="Categories"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Ezlos | Study With Me"><span class="header-title-pre">Ezlos</span><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="Posts">Posts</a><a class="menu-item" href="/tags/" title="Tags">Tags</a><a class="menu-item" href="/categories/" title="Categories">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Builder Design Pattern in Go</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Carlos Gomez</a></span>&nbsp;<span class="post-category">included in <a href="/categories/design-patterns/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Design Patterns</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-01">2023-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;703 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#quick-backstory">Quick backstory</a>
+      <ul>
+        <li><a href="#the-problem">The Problem</a></li>
+        <li><a href="#the-solution">The Solution</a></li>
+      </ul>
+    </li>
+    <li><a href="#what-is-the-builder-pattern">What is the builder pattern?</a>
+      <ul>
+        <li><a href="#go-example-easy">Go example (easy)</a></li>
+        <li><a href="#full-code-example">Full code example</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+    <li><a href="#reading-material">Reading Material</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="builder-pattern-in-go">Builder Pattern in Go</h1>
+<h2 id="quick-backstory">Quick backstory</h2>
+<h3 id="the-problem">The Problem</h3>
+<p>The problem I am facing is that I have a particular workflow for writing Go code, which gets repetitive. Even when working on starting a new project, a general idea, or testing a quick theory, the setup is a bit cumbersome for me. Here is an example of the project structure I typically start with:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Shell" data-lang="Shell"><span class="line"><span class="cl">└── folder1
+</span></span><span class="line"><span class="cl">    ├── main.go 
+</span></span><span class="line"><span class="cl">    ├── go.mod
+</span></span><span class="line"><span class="cl">    ├── README.md
+</span></span><span class="line"><span class="cl">    └── Makefile
+</span></span></code></pre></div><p>It felt like a lot to run go mod init github.com/EzlosSWM/<!-- raw HTML omitted --> and touch main.go README.md Makefile every time - let alone boilerplate content for each file. So that is when I decided, in typical programmer fashion, to write a script for generating the project structure.</p>
+<p><em>Note: the script and the breakdown will come after.</em></p>
+<p>I managed to write a simple enough script in Go to get it out of the way, but I knew; I could do better. That’s when I started brainstorming ways to make it scaleable &amp; easier to maintain. I wanted a CLI tool that generates boilerplate Go code for a generic project and eventually scales up to complete projects with different architectural patterns.</p>
+<h3 id="the-solution">The Solution</h3>
+<p>After deciding what I wanted, it was time to do some research on how to go about achieving it. That&rsquo;s when I ran into a video on YouTube titled <a href="https://www.youtube.com/watch?v=tv-_1er1mWI&amp;pp=ygUROCBkZXNpZ24gcGF0dGVybnM%3D" target="_blank" rel="noopener noreffer ">10 Design Patterns Explained in 10 Minutes</a> by Fireship. I found it interesting how he explained the builder pattern so I did more focused research on it. That&rsquo;s when I decided I was going to use the pattern to build my CLI tool.</p>
+<h2 id="what-is-the-builder-pattern">What is the builder pattern?</h2>
+<p>Essentially, a builder is a creational design pattern that allows you to create objects (in Go’s case, structs). Encapsulating the logic for creation allows for cleaner and easier-to-maintain code while being flexible. It defines a predetermined sequence of steps to promote consistency and reliability.</p>
+<p>Imagine having to build <em>n</em> users with different clearance levels. It would be much simpler to have a checklist of data a user needs to have. For example:</p>
+<ol>
+<li>setAge()</li>
+<li>setPhone()</li>
+<li>setAdminStatus()</li>
+</ol>
+<h3 id="go-example-easy">Go example (easy)</h3>
+<ol>
+<li>Initializing the project</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="cl"><span class="c1">// main.go
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kn">package</span> <span class="nx">main</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Hello, world!&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Now just run <code>go run main.go</code> to get:</p>
+<blockquote>
+<p>$ Hello, world!</p>
+</blockquote>
+<ol start="2">
+<li>Defining our interface</li>
+</ol>
+<p>Under our import section, we want to define our builder interface to house our API.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">Builder</span> <span class="kd">interface</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">setAge</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nx">User</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">setPhone</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nx">User</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">setAdminStatus</span><span class="p">(</span><span class="kt">bool</span><span class="p">)</span> <span class="nx">User</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><ol start="3">
+<li>Define our User struct</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">User</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">name</span>    <span class="kt">string</span> 
+</span></span><span class="line"><span class="cl">    <span class="nx">age</span>     <span class="kt">int</span> 
+</span></span><span class="line"><span class="cl">    <span class="nx">phone</span>   <span class="kt">int</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">isAdmin</span> <span class="kt">bool</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><ol start="4">
+<li>Define our functions to instantiate our User struct &amp; function</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="cl"><span class="c1">// instantiates our User struct
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">newUser</span><span class="p">(</span><span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="o">*</span><span class="nx">User</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="o">&amp;</span><span class="nx">User</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="p">:</span> <span class="nx">name</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// attaches our methods to the User struct 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">u</span> <span class="o">*</span><span class="nx">User</span><span class="p">)</span> <span class="nf">setAge</span><span class="p">(</span><span class="nx">age</span> <span class="kt">int</span><span class="p">)</span> <span class="o">*</span><span class="nx">User</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">u</span><span class="p">.</span><span class="nx">age</span> <span class="p">=</span> <span class="nx">age</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">u</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">u</span> <span class="o">*</span><span class="nx">User</span><span class="p">)</span> <span class="nf">setPhone</span><span class="p">(</span><span class="nx">phone</span> <span class="kt">int</span><span class="p">)</span> <span class="o">*</span><span class="nx">User</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">u</span><span class="p">.</span><span class="nx">phone</span> <span class="p">=</span> <span class="nx">phone</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">u</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">u</span> <span class="o">*</span><span class="nx">User</span><span class="p">)</span> <span class="nf">setAdminStatus</span><span class="p">(</span><span class="nx">status</span> <span class="kt">bool</span><span class="p">)</span> <span class="o">*</span><span class="nx">User</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">u</span><span class="p">.</span><span class="nx">isAdmin</span> <span class="p">=</span> <span class="nx">status</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">u</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><ol start="4">
+<li>Building our users</li>
+</ol>
+<p>Now that we’ve done most of the heavy lifting, we can start by using our builder to create users quickly and effectively.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">regularUser</span> <span class="o">:=</span> <span class="nf">newUser</span><span class="p">(</span><span class="s">&#34;foo&#34;</span><span class="p">).</span><span class="nf">setAge</span><span class="p">(</span><span class="mi">18</span><span class="p">).</span><span class="nf">setPhone</span><span class="p">(</span><span class="mi">123456789</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">regularUser</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">adminUser</span> <span class="o">:=</span> <span class="nf">newUser</span><span class="p">(</span><span class="s">&#34;bar&#34;</span><span class="p">).</span><span class="nf">setAge</span><span class="p">(</span><span class="mi">20</span><span class="p">).</span><span class="nf">setAdminStatus</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">adminUser</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Output:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Shell" data-lang="Shell"><span class="line"><span class="cl"><span class="p">&amp;</span><span class="o">{</span>foo <span class="m">18</span> <span class="m">123456789</span> false<span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">&amp;</span><span class="o">{</span>bar <span class="m">20</span> <span class="m">0</span> true<span class="o">}</span>
+</span></span></code></pre></div><p>Hurray! We just made a User builder.</p>
+<h3 id="full-code-example">Full code example</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">Builder</span> <span class="kd">interface</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">setAge</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nx">User</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">setPhone</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nx">User</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">setAdminStatus</span><span class="p">(</span><span class="kt">bool</span><span class="p">)</span> <span class="nx">User</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">User</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">name</span>    <span class="kt">string</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">age</span>     <span class="kt">int</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">phone</span>   <span class="kt">int</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">isAdmin</span> <span class="kt">bool</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">newUser</span><span class="p">(</span><span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="o">*</span><span class="nx">User</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">User</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">name</span><span class="p">:</span> <span class="nx">name</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">u</span> <span class="o">*</span><span class="nx">User</span><span class="p">)</span> <span class="nf">setAge</span><span class="p">(</span><span class="nx">age</span> <span class="kt">int</span><span class="p">)</span> <span class="o">*</span><span class="nx">User</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">u</span><span class="p">.</span><span class="nx">age</span> <span class="p">=</span> <span class="nx">age</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">u</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">u</span> <span class="o">*</span><span class="nx">User</span><span class="p">)</span> <span class="nf">setPhone</span><span class="p">(</span><span class="nx">phone</span> <span class="kt">int</span><span class="p">)</span> <span class="o">*</span><span class="nx">User</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">u</span><span class="p">.</span><span class="nx">phone</span> <span class="p">=</span> <span class="nx">phone</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">u</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">u</span> <span class="o">*</span><span class="nx">User</span><span class="p">)</span> <span class="nf">setAdminStatus</span><span class="p">(</span><span class="nx">status</span> <span class="kt">bool</span><span class="p">)</span> <span class="o">*</span><span class="nx">User</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">u</span><span class="p">.</span><span class="nx">isAdmin</span> <span class="p">=</span> <span class="nx">status</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">u</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">regularUser</span> <span class="o">:=</span> <span class="nf">newUser</span><span class="p">(</span><span class="s">&#34;foo&#34;</span><span class="p">).</span><span class="nf">setAge</span><span class="p">(</span><span class="mi">18</span><span class="p">).</span><span class="nf">setPhone</span><span class="p">(</span><span class="mi">123456789</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">regularUser</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">adminUser</span> <span class="o">:=</span> <span class="nf">newUser</span><span class="p">(</span><span class="s">&#34;bar&#34;</span><span class="p">).</span><span class="nf">setAge</span><span class="p">(</span><span class="mi">20</span><span class="p">).</span><span class="nf">setAdminStatus</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">adminUser</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Output 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">&amp;</span><span class="p">{</span><span class="nx">foo</span> <span class="mi">18</span> <span class="mi">123456789</span> <span class="kc">false</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">&amp;</span><span class="p">{</span><span class="nx">bar</span> <span class="mi">20</span> <span class="mi">0</span> <span class="kc">true</span><span class="p">}</span>
+</span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
+<p>The builder pattern is an easy-to-implement creational design pattern, and if implemented correctly - scales easily. In this scenario, we have a builder that creates regular and admin users, but there are multiple scenarios where this would be useful.</p>
+<h2 id="reading-material">Reading Material</h2>
+<p><a href="https://refactoring.guru/design-patterns/builder" target="_blank" rel="noopener noreffer ">Refactoring Guru - Builder</a></p>
+<p><a href="https://refactoring.guru/design-patterns/builder/go/example" target="_blank" rel="noopener noreffer ">Refactoring Guru - Builder in Go</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Builder_pattern" target="_blank" rel="noopener noreffer ">Wikipedia</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-05-20</span>
+            </div><div class="post-info-license">
+                <span>MIT</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://example.org/posts/builder-pattern/" data-title="Builder Design Pattern in Go" data-via="EzlosSWM" data-hashtags="design,pattern,go,notes"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://example.org/posts/builder-pattern/" data-hashtag="design"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://example.org/posts/builder-pattern/" data-title="Builder Design Pattern in Go"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://example.org/posts/builder-pattern/" data-title="Builder Design Pattern in Go"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://example.org/posts/builder-pattern/" data-title="Builder Design Pattern in Go"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/design/">design</a>,&nbsp;<a href="/tags/pattern/">pattern</a>,&nbsp;<a href="/tags/go/">go</a>,&nbsp;<a href="/tags/notes/">notes</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Carlos Gomez</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"data":{"id-1":"SWM","id-2":"SWM"},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

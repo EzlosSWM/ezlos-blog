@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>pattern - Tag - Ezlos | Study With Me</title>
+        <link>http://example.org/tags/pattern/</link>
+        <description>pattern - Tag - Ezlos | Study With Me</description>
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>ezlosswm@gmail.com (Carlos Gomez)</managingEditor>
+            <webMaster>ezlosswm@gmail.com (Carlos Gomez)</webMaster><copyright>Carlos Gomez</copyright><lastBuildDate>Thu, 01 Jun 2023 15:58:26 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/pattern/" rel="self" type="application/rss+xml" /><item>
+    <title>Builder Design Pattern in Go</title>
+    <link>http://example.org/posts/builder-pattern/</link>
+    <pubDate>Thu, 01 Jun 2023 15:58:26 &#43;0800</pubDate>
+    <author>Carlos Gomez</author>
+    <guid>http://example.org/posts/builder-pattern/</guid>
+    <description><![CDATA[A short explanation of the builder design pattern with an example using Go.]]></description>
+</item>
+</channel>
+</rss>
