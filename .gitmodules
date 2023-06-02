@@ -1,6 +1,6 @@
 [submodule "LoveIt"]
     path = LoveIt
-    url = git://github.com/dillonzq/LoveIt.git
+    url = https://github.com/dillonzq/LoveIt.git
 
 
 
