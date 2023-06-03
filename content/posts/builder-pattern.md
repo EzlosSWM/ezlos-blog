@@ -55,9 +55,6 @@ It felt like a lot to run go mod init github.com/EzlosSWM/<new-project> and touc
 
 I managed to write a simple enough script in Go to get it out of the way, but I knew; I could do better. That’s when I started brainstorming ways to make it scaleable & easier to maintain. I wanted a CLI tool that generates boilerplate Go code for a generic project and eventually scales up to complete projects with different architectural patterns.    
 
-### The Solution
-After deciding what I wanted, it was time to do some research on how to go about achieving it. That's when I ran into a video on YouTube titled [10 Design Patterns Explained in 10 Minutes](https://www.youtube.com/watch?v=tv-_1er1mWI&pp=ygUROCBkZXNpZ24gcGF0dGVybnM%3D) by Fireship. I found it interesting how he explained the builder pattern so I did more focused research on it. That's when I decided I was going to use the pattern to build my CLI tool. 
-
 ## What is the builder pattern?
 Essentially, a builder is a creational design pattern that allows you to create objects (in Go’s case, structs). Encapsulating the logic for creation allows for cleaner and easier-to-maintain code while being flexible. It defines a predetermined sequence of steps to promote consistency and reliability.
 
